@@ -11,21 +11,34 @@ public class Line : MonoBehaviour
     private float length;
     private bool done;
     private GameObject script;
+    private int order;
 
     private Touch touch;
+
     void Start()
     {
         StartPos = transform.position;
         l = GetComponent<LineRenderer>();
         script = GameObject.Find("DrawAgent");
         Draw comp = script.GetComponent<Draw>();
-        length = comp.lengths[comp.order];
+        order = comp.order;
+        length = Math.Abs(Vector2.Distance(comp.positions[order,0], comp.positions[order,1]));
+        Debug.Log(length);
         done = false;
     }
 
     void Update()
     {
-        if (!done && Input.touchCount > 0) {
+        if (script.GetComponent<Draw>().order == 9)
+        {
+            //Align into position
+            Debug.Log("I should go into my place now");
+        }
+        else if (touch.phase == TouchPhase.Ended && !done)
+        {
+            Destroy(gameObject);
+        }
+        else if (!done && Input.touchCount > 0) {
             touch = Input.GetTouch(0);
             Vector3 current = touch.position;
             current = Camera.main.ScreenToWorldPoint(current);
@@ -46,11 +59,6 @@ public class Line : MonoBehaviour
                 done = true;
                 script.GetComponent<Draw>().order++;
             }
-        }
-        if (touch.phase == TouchPhase.Ended && !done)
-        {
-            Debug.Log("I should destroy now");
-            Destroy(gameObject);
         }
     }
 }

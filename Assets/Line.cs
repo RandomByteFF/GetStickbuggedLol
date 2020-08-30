@@ -4,15 +4,32 @@ using UnityEngine;
 
 public class Line : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float height;
+    private Vector3 StartPos;
+    private LineRenderer l;
     void Start()
     {
-        
+        StartPos = transform.position;
+        l = GetComponent<LineRenderer>();
+        Debug.Log(StartPos);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.touchCount > 0) {
+            Vector3 current = Input.GetTouch(0).position;
+            current = Camera.main.ScreenToWorldPoint(current);
+            current.z = 0;
+
+            Vector3[] pos = {StartPos, current};
+            Color c = new Color(252, 253, 189);
+
+            l.startWidth = height;
+            l.endWidth = height;
+            l.SetPositions(pos);
+            //l.startColor = c;
+            //l.endColor = c;
+            l.useWorldSpace = true;
+        }
     }
 }

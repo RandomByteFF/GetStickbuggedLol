@@ -9,7 +9,7 @@ public class Draw : MonoBehaviour
     public GameObject line;
     private Touch touch;
     public int order;
-    public float[] lengths;
+    public int finished = 0;
     //if there is a better way pls tell me. I can only think about reading this from a file.
     public Vector2[,] positions = { { new Vector2(2.17f, 1.3f), new Vector2(0.62f, 1.3f) } , //back
                                     { new Vector2(-0.92f, 2.13f), new Vector2(0.51f, 1.37f) } , //front
@@ -32,7 +32,9 @@ public class Draw : MonoBehaviour
     {
         if (order >= 9) {
             //Align lines into place
-            StartVideo();
+            if (finished == 9) {
+                StartVideo();
+            }
         }
         else if (Input.touchCount > 0) {
             touch = Input.GetTouch(0);

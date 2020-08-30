@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class Video : MonoBehaviour
 {
     private VideoPlayer videoPlayer;
-    public Camera camera;
+    new public Camera camera;
     public void Play() {
         camera.backgroundColor = Color.black;
         videoPlayer = GetComponent<VideoPlayer>();

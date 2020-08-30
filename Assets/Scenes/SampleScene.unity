@@ -237,6 +237,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   video: {fileID: 856213505}
   line: {fileID: 1945975318650849093, guid: 9dc3f683d960c3d429039267e8ed9fc3, type: 3}
+  order: 0
+  lengths:
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
 --- !u!4 &786270579
 Transform:
   m_ObjectHideFlags: 0

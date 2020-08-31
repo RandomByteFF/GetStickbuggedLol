@@ -18,6 +18,7 @@ public class Line : MonoBehaviour
     private Vector3[] cur;
     private Vector3[,] final;
     private bool reported = false;
+    private float[] step;
 
     void Start()
     {
@@ -28,6 +29,7 @@ public class Line : MonoBehaviour
         order = comp.order;
         final = comp.positions;
         Debug.Log("Order: " + order);
+        step = new float[2];
         length = Math.Abs(Vector3.Distance(comp.positions[order,0], comp.positions[order,1]));
         done = false;
     }
@@ -37,21 +39,18 @@ public class Line : MonoBehaviour
         if (script.GetComponent<Draw>().order >= 9)
         {
             //Align into position
-            float step = stepSpeed * Time.deltaTime;
             for (int i = 0; i < 2; i++)
             {
-                Vector3 target = script.GetComponent<Draw>().positions[order, i];
-                cur[i] = Vector3.MoveTowards(cur[i], target, step);
+                float stepSize = step[i] * Time.deltaTime;
+                Vector3 target = final[order, i];
+                cur[i] = Vector3.MoveTowards(cur[i], target, stepSize);
             }
             l.SetPositions(cur);
 
-            Debug.Log("I should go into my place now");
-            //new Vector3(script.GetComponent<Draw>().positions[order, 0].x, script.GetComponent<Draw>().positions[order, 0].y, 0) == cur[0] && new Vector3(script.GetComponent<Draw>().positions[order, 1].x, script.GetComponent<Draw>().positions[order, 1].y, 0) == cur[1] && !reported
             if (!reported && final[order, 0] == cur[0] && final[order,1] == cur[1]) {
                 script.GetComponent<Draw>().finished++;
                 reported = true;
             }
-            //TODO: prettier
         }
         else if (touch.phase == TouchPhase.Ended && !done)
         {
@@ -76,6 +75,10 @@ public class Line : MonoBehaviour
 
             float distance = Math.Abs(Vector3.Distance(current, StartPos));
             if (distance >= length) {
+                for (int i = 0; i < 2; i++)
+                {
+                    step[i] = Math.Abs(Vector3.Distance(final[order, i], pos[i])) * stepSpeed;
+                }
                 done = true;
                 script.GetComponent<Draw>().order++;
             }

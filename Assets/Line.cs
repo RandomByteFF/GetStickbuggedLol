@@ -10,7 +10,7 @@ public class Line : MonoBehaviour
     private LineRenderer l;
     private float length;
     private bool done;
-    private GameObject script;
+    public GameObject script;
     private int order;
 
     private Touch touch;
@@ -21,16 +21,17 @@ public class Line : MonoBehaviour
     private float[] step;
 
     public AudioClip[] clips;
+    public float waitAfterInPlace;
+    private float wait;
 
     void Start()
     {
         StartPos = transform.position;
         l = GetComponent<LineRenderer>();
-        script = GameObject.Find("DrawAgent");
+        //script = GameObject.FindWithTag("DrawAgent");
         Draw comp = script.GetComponent<Draw>();
         order = comp.order;
         final = comp.positions;
-        Debug.Log("Order: " + order);
         step = new float[2];
         length = Math.Abs(Vector3.Distance(comp.positions[order,0], comp.positions[order,1]));
         done = false;

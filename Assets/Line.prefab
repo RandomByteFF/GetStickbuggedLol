@@ -155,6 +155,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7f72ec6443619ca44be348141f45dd54, type: 3}
   - {fileID: 8300000, guid: d2acf1ca7f458ab4996c8ad448dd73e0, type: 3}
   - {fileID: 8300000, guid: b203df85c0bf1434a89d1777026f85f2, type: 3}
+  waitAfterInPlace: 1.5
 --- !u!82 &6938631207205492042
 AudioSource:
   m_ObjectHideFlags: 0

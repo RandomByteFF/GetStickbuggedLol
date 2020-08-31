@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.Video;
 
 public class Draw : MonoBehaviour
 {
@@ -15,6 +17,9 @@ public class Draw : MonoBehaviour
     public AudioClip[] clips;
     private bool playedAudio = false;
     public float wait2;
+    private bool waitingForVideo = false;
+
+    private List<GameObject> lines;
     //if there is a better way pls tell me. I can only think about reading this from a file.
     public Vector3[,] positions = { { new Vector3(2.17f, 1.3f, 0f), new Vector3(0.62f, 1.3f, 0f) } , //back
                                     { new Vector3(-0.92f, 2.13f, 0f), new Vector3(0.51f, 1.37f, 0f) } , //front
@@ -26,11 +31,8 @@ public class Draw : MonoBehaviour
                                     { new Vector3(0.47f, 1.24f, 0f), new Vector3(0.06f, -0.1f, 0f) } , //4th leg
                                     { new Vector3(1.8f, 1.18f, 0f), new Vector3(1.88f, -0.23f, 0f)} }; //5th leg
     void Start() {
-        //Set screen orientation
-        Screen.orientation = ScreenOrientation.Landscape;
-        Screen.orientation = ScreenOrientation.AutoRotation;
-        Screen.autorotateToPortrait = false;
-        Screen.autorotateToPortraitUpsideDown = false;
+        lines = new List<GameObject>();
+        video = GameObject.Find("Video Player");
     }
 
     void Update()
@@ -50,7 +52,18 @@ public class Draw : MonoBehaviour
             //Align lines into place
             else if (finished == 9)
             {
-                StartVideo();
+                if (!waitingForVideo)
+                {
+                    StartVideo();
+                    waitingForVideo = true;
+                }
+                else if(GameObject.Find("Video Player").GetComponent<VideoPlayer>().isPlaying){
+                    foreach (GameObject i in lines)
+                    {
+                        Destroy(i);
+                    }
+                    Destroy(gameObject);
+                }
             }
             else if (!playedAudio && wait2 >= 0) {
                 wait2 -= Time.deltaTime;
@@ -70,7 +83,8 @@ public class Draw : MonoBehaviour
             transform.position = touchpos;
 
             if (touch.phase == TouchPhase.Began) {
-                Instantiate(line, transform.position, transform.rotation);
+                lines.Add(Instantiate(line, transform.position, transform.rotation));
+                lines[lines.Count - 1].GetComponent<Line>().script = gameObject;
             }
         }
     }

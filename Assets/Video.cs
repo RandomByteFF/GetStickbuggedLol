@@ -10,7 +10,7 @@ public class Video : MonoBehaviour
     private VideoPlayer videoPlayer;
     new public Camera camera;
     public void Play() {
-        camera.backgroundColor = Color.black;
+        //camera.backgroundColor = Color.black;
         videoPlayer = GetComponent<VideoPlayer>();
         videoPlayer.Play();
     }

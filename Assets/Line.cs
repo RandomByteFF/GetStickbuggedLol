@@ -20,6 +20,8 @@ public class Line : MonoBehaviour
     private bool reported = false;
     private float[] step;
 
+    public AudioClip[] clips;
+
     void Start()
     {
         StartPos = transform.position;
@@ -36,7 +38,7 @@ public class Line : MonoBehaviour
 
     void Update()
     {
-        if (script.GetComponent<Draw>().order >= 9)
+        if (script.GetComponent<Draw>().order >= 10)
         {
             //Align into position
             for (int i = 0; i < 2; i++)
@@ -75,6 +77,8 @@ public class Line : MonoBehaviour
 
             float distance = Math.Abs(Vector3.Distance(current, StartPos));
             if (distance >= length) {
+                GetComponent<AudioSource>().clip = clips[order];
+                GetComponent<AudioSource>().Play();
                 for (int i = 0; i < 2; i++)
                 {
                     step[i] = Math.Abs(Vector3.Distance(final[order, i], pos[i])) * stepSpeed;

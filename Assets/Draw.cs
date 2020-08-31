@@ -10,6 +10,11 @@ public class Draw : MonoBehaviour
     private Touch touch;
     public int order;
     public int finished = 0;
+    public float wait;
+    private bool doneWaiting = false;
+    public AudioClip[] clips;
+    private bool playedAudio = false;
+    public float wait2;
     //if there is a better way pls tell me. I can only think about reading this from a file.
     public Vector3[,] positions = { { new Vector3(2.17f, 1.3f, 0f), new Vector3(0.62f, 1.3f, 0f) } , //back
                                     { new Vector3(-0.92f, 2.13f, 0f), new Vector3(0.51f, 1.37f, 0f) } , //front
@@ -31,9 +36,31 @@ public class Draw : MonoBehaviour
     void Update()
     {
         if (order >= 9) {
+            if (wait <= 0 && !doneWaiting)
+            {
+                GameObject.Find("Main Camera").GetComponent<Camera>().backgroundColor = Color.black;
+                doneWaiting = true;
+                GetComponent<AudioSource>().clip = clips[0];
+                GetComponent<AudioSource>().Play();
+            }
+            else if (!doneWaiting)
+            {
+                wait -= Time.deltaTime;
+            }
             //Align lines into place
-            if (finished == 9) {
+            else if (finished == 9)
+            {
                 StartVideo();
+            }
+            else if (!playedAudio && wait2 >= 0) {
+                wait2 -= Time.deltaTime;
+            }
+            else if (!playedAudio)
+            {
+                GetComponent<AudioSource>().clip = clips[1];
+                GetComponent<AudioSource>().Play();
+                order++;
+                playedAudio = true;
             }
         }
         else if (Input.touchCount > 0) {

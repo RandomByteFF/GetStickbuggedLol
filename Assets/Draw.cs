@@ -11,15 +11,15 @@ public class Draw : MonoBehaviour
     public int order;
     public int finished = 0;
     //if there is a better way pls tell me. I can only think about reading this from a file.
-    public Vector2[,] positions = { { new Vector2(2.17f, 1.3f), new Vector2(0.62f, 1.3f) } , //back
-                                    { new Vector2(-0.92f, 2.13f), new Vector2(0.51f, 1.37f) } , //front
-                                    { new Vector2(-0.5f, 1.83f), new Vector2(-1.74f, 1.22f)} , //back leg top
-                                    { new Vector2(-1.74f, 1.22f), new Vector2(-2.6f, 0.2f) } , //back leg bottom
-                                    { new Vector2(-0.54f, 1.77f), new Vector2(-1.26f, 0.09f) } , //2nd leg (from the left)
-                                    { new Vector2(0.14f, 1.52f), new Vector2(-0.53f, 0.84f)} , //3rd leg top
-                                    { new Vector2(-0.53f, 0.84f), new Vector2(-0.74f, 0.06f) } , //3rd leg bottom
-                                    { new Vector2(0.47f, 1.24f), new Vector2(0.06f, -0.1f) } , //4th leg
-                                    { new Vector2(1.8f, 1.18f), new Vector2(1.88f, -0.23f)} }; //5th leg
+    public Vector3[,] positions = { { new Vector3(2.17f, 1.3f, 0f), new Vector3(0.62f, 1.3f, 0f) } , //back
+                                    { new Vector3(-0.92f, 2.13f, 0f), new Vector3(0.51f, 1.37f, 0f) } , //front
+                                    { new Vector3(-0.5f, 1.83f, 0f), new Vector3(-1.74f, 1.22f, 0f)} , //back leg top
+                                    { new Vector3(-1.74f, 1.22f, 0f), new Vector3(-2.6f, 0.2f, 0f) } , //back leg bottom
+                                    { new Vector3(-0.54f, 1.77f, 0f), new Vector3(-1.26f, 0.09f, 0f) } , //2nd leg (from the left)
+                                    { new Vector3(0.14f, 1.52f, 0f), new Vector3(-0.53f, 0.84f, 0f)} , //3rd leg top
+                                    { new Vector3(-0.53f, 0.84f, 0f), new Vector3(-0.74f, 0.06f, 0f) } , //3rd leg bottom
+                                    { new Vector3(0.47f, 1.24f, 0f), new Vector3(0.06f, -0.1f, 0f) } , //4th leg
+                                    { new Vector3(1.8f, 1.18f, 0f), new Vector3(1.88f, -0.23f, 0f)} }; //5th leg
     void Start() {
         //Set screen orientation
         Screen.orientation = ScreenOrientation.Landscape;

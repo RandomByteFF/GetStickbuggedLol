@@ -16,6 +16,7 @@ public class Line : MonoBehaviour
     private Touch touch;
     public float stepSpeed;
     private Vector3[] cur;
+    private Vector3[,] final;
     private bool reported = false;
 
     void Start()
@@ -25,8 +26,9 @@ public class Line : MonoBehaviour
         script = GameObject.Find("DrawAgent");
         Draw comp = script.GetComponent<Draw>();
         order = comp.order;
+        final = comp.positions;
         Debug.Log("Order: " + order);
-        length = Math.Abs(Vector2.Distance(comp.positions[order,0], comp.positions[order,1]));
+        length = Math.Abs(Vector3.Distance(comp.positions[order,0], comp.positions[order,1]));
         done = false;
     }
 
@@ -38,13 +40,14 @@ public class Line : MonoBehaviour
             float step = stepSpeed * Time.deltaTime;
             for (int i = 0; i < 2; i++)
             {
-                Vector3 target = new Vector3(script.GetComponent<Draw>().positions[order, i].x, script.GetComponent<Draw>().positions[order, i].y, 0);
+                Vector3 target = script.GetComponent<Draw>().positions[order, i];
                 cur[i] = Vector3.MoveTowards(cur[i], target, step);
             }
             l.SetPositions(cur);
 
             Debug.Log("I should go into my place now");
-            if (new Vector3(script.GetComponent<Draw>().positions[order, 0].x, script.GetComponent<Draw>().positions[order, 0].y, 0) == cur[0] && new Vector3(script.GetComponent<Draw>().positions[order, 1].x, script.GetComponent<Draw>().positions[order, 1].y, 0) == cur[1] && !reported) {
+            //new Vector3(script.GetComponent<Draw>().positions[order, 0].x, script.GetComponent<Draw>().positions[order, 0].y, 0) == cur[0] && new Vector3(script.GetComponent<Draw>().positions[order, 1].x, script.GetComponent<Draw>().positions[order, 1].y, 0) == cur[1] && !reported
+            if (!reported && final[order, 0] == cur[0] && final[order,1] == cur[1]) {
                 script.GetComponent<Draw>().finished++;
                 reported = true;
             }
